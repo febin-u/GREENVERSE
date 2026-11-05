@@ -1,0 +1,294 @@
+.eco-section {
+    padding: 110px 8%;
+    background: #081e10;
+    border-top: 1px solid rgba(181, 255, 75, 0.12);
+}
+
+.eco-heading {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.eco-heading h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(35px, 5vw, 55px);
+    line-height: 1.15;
+    letter-spacing: -2px;
+    margin: 20px 0;
+}
+
+.eco-heading h2 span {
+    color: #b5ff4b;
+}
+
+.eco-heading>p {
+    color: #94a997;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.eco-chat {
+    max-width: 850px;
+    margin: auto;
+    overflow: hidden;
+    border: 1px solid rgba(181, 255, 75, 0.2);
+    border-radius: 12px;
+    background: #06170c;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+}
+
+.eco-chat-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 25px;
+    background: #102a18;
+    border-bottom: 1px solid rgba(181, 255, 75, 0.15);
+}
+
+.eco-bot-avatar {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    color: #b5ff4b;
+    background: rgba(181, 255, 75, 0.12);
+    border: 1px solid rgba(181, 255, 75, 0.3);
+    border-radius: 50%;
+}
+
+.eco-bot-info {
+    flex: 1;
+}
+
+.eco-bot-info h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    margin: 0 0 6px;
+}
+
+.eco-bot-info span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #93aa96;
+    font-size: 10px;
+}
+
+.eco-bot-info i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #b5ff4b;
+    box-shadow: 0 0 8px #b5ff4b;
+}
+
+.eco-clear {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    color: #91a894;
+    background: transparent;
+    border: 1px solid rgba(181, 255, 75, 0.15);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.eco-clear:hover {
+    color: #b5ff4b;
+    border-color: #b5ff4b;
+}
+
+.eco-messages {
+    height: 360px;
+    overflow-y: auto;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.eco-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    max-width: 90%;
+}
+
+.eco-message.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.message-avatar {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #b5ff4b;
+    background: #142d1b;
+}
+
+.eco-message.user .message-avatar {
+    color: #071708;
+    background: #b5ff4b;
+}
+
+.message-bubble {
+    padding: 14px 17px;
+    border: 1px solid rgba(181, 255, 75, 0.12);
+    border-radius: 3px 12px 12px 12px;
+    background: #102319;
+    color: #d5e5d5;
+    font-size: 12px;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+}
+
+.eco-message.user .message-bubble {
+    border-radius: 12px 3px 12px 12px;
+    color: #0b1b0d;
+    background: #b5ff4b;
+    border-color: #b5ff4b;
+}
+
+.eco-suggestions {
+    padding: 18px 25px;
+    border-top: 1px solid rgba(181, 255, 75, 0.1);
+}
+
+.suggestion-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #b5ff4b;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 13px;
+}
+
+.suggestion-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.suggestion-list button {
+    padding: 9px 12px;
+    color: #b4c7b5;
+    background: #102319;
+    border: 1px solid rgba(181, 255, 75, 0.18);
+    border-radius: 20px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.suggestion-list button:hover {
+    color: #b5ff4b;
+    border-color: #b5ff4b;
+}
+
+.eco-input-area {
+    display: flex;
+    gap: 12px;
+    padding: 18px 25px;
+    background: #0c2113;
+    border-top: 1px solid rgba(181, 255, 75, 0.15);
+}
+
+.eco-input-area input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    color: #efffe9;
+    background: #142c1b;
+    border: 1px solid rgba(181, 255, 75, 0.18);
+    border-radius: 6px;
+    outline: none;
+    font-size: 12px;
+}
+
+.eco-input-area input:focus {
+    border-color: #b5ff4b;
+}
+
+.eco-input-area input::placeholder {
+    color: #758d78;
+}
+
+.eco-input-area button {
+    width: 48px;
+    min-width: 48px;
+    display: grid;
+    place-items: center;
+    color: #071708;
+    background: #b5ff4b;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.eco-input-area button:hover:not(:disabled) {
+    background: #d0ff8c;
+    transform: translateY(-2px);
+}
+
+.eco-input-area button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.eco-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 15px 16px;
+    margin: 0;
+    color: #718776;
+    font-size: 10px;
+    text-align: center;
+}
+
+.eco-note svg {
+    color: #b5ff4b;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .eco-section {
+        padding: 75px 6%;
+    }
+
+    .eco-chat-header {
+        padding: 17px;
+    }
+
+    .eco-messages {
+        height: 390px;
+        padding: 17px;
+    }
+
+    .eco-message {
+        max-width: 96%;
+    }
+
+    .eco-suggestions {
+        padding: 17px;
+    }
+
+    .eco-input-area {
+        padding: 13px;
+    }
+
+    .eco-note {
+        line-height: 1.6;
+    }
+}

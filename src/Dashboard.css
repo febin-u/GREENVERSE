@@ -1,0 +1,430 @@
+.dashboard-section {
+    padding: 110px 8%;
+    background: #04150c;
+    border-top: 1px solid rgba(181, 255, 75, 0.12);
+}
+
+.dashboard-heading {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.dashboard-heading h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.12;
+    letter-spacing: -2px;
+    margin: 20px 0;
+}
+
+.dashboard-heading h2 span {
+    color: #b5ff4b;
+}
+
+.dashboard-heading p {
+    color: #94a997;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.dashboard-welcome {
+    max-width: 1150px;
+    margin: 0 auto 22px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: linear-gradient(110deg, #173a20, #0b2112);
+    border: 1px solid rgba(181, 255, 75, 0.25);
+    border-radius: 10px;
+}
+
+.welcome-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #b5ff4b;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+}
+
+.dashboard-welcome h3 {
+    margin: 14px 0 7px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 25px;
+}
+
+.dashboard-welcome p {
+    margin: 0;
+    color: #9cb29f;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.welcome-leaf {
+    width: 75px;
+    height: 75px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    color: #b5ff4b;
+    background: rgba(181, 255, 75, 0.1);
+    border: 1px solid rgba(181, 255, 75, 0.25);
+    border-radius: 50%;
+    box-shadow: 0 0 35px rgba(181, 255, 75, 0.08);
+}
+
+.dashboard-stats {
+    max-width: 1150px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.dashboard-stat {
+    min-width: 0;
+    padding: 23px;
+    background: linear-gradient(145deg, #102a18, #091b10);
+    border: 1px solid rgba(181, 255, 75, 0.14);
+    border-radius: 9px;
+}
+
+.stat-icon {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+    border-radius: 9px;
+}
+
+.stat-icon.points,
+.stat-icon.rank {
+    color: #b5ff4b;
+    background: rgba(181, 255, 75, 0.1);
+}
+
+.stat-icon.missions {
+    color: #6bd9a0;
+    background: rgba(107, 217, 160, 0.1);
+}
+
+.stat-icon.progress {
+    color: #70caff;
+    background: rgba(112, 202, 255, 0.1);
+}
+
+.dashboard-stat>span {
+    display: block;
+    color: #8fa492;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.dashboard-stat>strong {
+    display: block;
+    margin: 10px 0;
+    color: #b5ff4b;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 33px;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-stat>strong.rank-name {
+    font-size: 19px;
+    min-height: 39px;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-stat>small {
+    color: #849b89;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.dashboard-main-grid {
+    max-width: 1150px;
+    margin: 35px auto 0;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 18px;
+}
+
+.dashboard-panel {
+    min-width: 0;
+    padding: 27px;
+    background: linear-gradient(145deg, #102a18, #091b10);
+    border: 1px solid rgba(181, 255, 75, 0.14);
+    border-radius: 9px;
+}
+
+.panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.panel-heading>svg {
+    color: #b5ff4b;
+}
+
+.panel-heading h3 {
+    margin: 10px 0 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+}
+
+.dashboard-progress {
+    height: 9px;
+    overflow: hidden;
+    background: #233b29;
+    border-radius: 20px;
+}
+
+.dashboard-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #73cb30, #c4ff65);
+    border-radius: 20px;
+    transition: width 0.4s ease;
+}
+
+.progress-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 12px;
+    color: #91a695;
+    font-size: 10px;
+}
+
+.dashboard-completed-list {
+    margin-top: 24px;
+}
+
+.dashboard-completed-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(181, 255, 75, 0.1);
+}
+
+.completed-icon {
+    width: 39px;
+    height: 39px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    color: #b5ff4b;
+    background: rgba(181, 255, 75, 0.09);
+    border-radius: 8px;
+}
+
+.completed-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.completed-info strong {
+    display: block;
+    color: #e5f2e5;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.completed-info small {
+    display: block;
+    margin-top: 5px;
+    color: #829a87;
+    font-size: 10px;
+}
+
+.dashboard-completed-item>span {
+    flex-shrink: 0;
+    color: #b5ff4b;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.dashboard-empty {
+    padding: 30px 10px;
+    text-align: center;
+    color: #8ea391;
+}
+
+.dashboard-empty svg {
+    color: #b5ff4b;
+}
+
+.dashboard-empty p {
+    font-size: 12px;
+}
+
+.dashboard-empty a {
+    color: #b5ff4b;
+    font-size: 11px;
+    text-decoration: none;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(181, 255, 75, 0.1);
+}
+
+.achievement-icon {
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: rgba(181, 255, 75, 0.08);
+    color: #6d836f;
+}
+
+.achievement-item.unlocked .achievement-icon {
+    color: #b5ff4b;
+    background: rgba(181, 255, 75, 0.13);
+}
+
+.achievement-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.achievement-info strong {
+    display: block;
+    color: #e4f1e4;
+    font-size: 12px;
+}
+
+.achievement-info small {
+    display: block;
+    margin-top: 5px;
+    color: #829a87;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.achievement-check {
+    flex-shrink: 0;
+    color: #b5ff4b;
+}
+
+.achievement-lock {
+    flex-shrink: 0;
+    color: #829a87;
+    font-size: 9px;
+}
+
+.dashboard-quick-links {
+    max-width: 1150px;
+    margin: 35px auto 0;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    border: 1px solid rgba(181, 255, 75, 0.17);
+    border-radius: 9px;
+    background: rgba(181, 255, 75, 0.035);
+}
+
+.dashboard-quick-links h3 {
+    margin: 9px 0 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 19px;
+}
+
+.quick-link-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.quick-link-buttons a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 13px;
+    color: #b5ff4b;
+    border: 1px solid rgba(181, 255, 75, 0.23);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 10px;
+    transition: 0.2s;
+}
+
+.quick-link-buttons a:hover {
+    background: #b5ff4b;
+    color: #071708;
+}
+
+@media (max-width: 950px) {
+    .dashboard-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-quick-links {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 550px) {
+    .dashboard-section {
+        padding: 75px 6%;
+    }
+
+    .dashboard-welcome {
+        padding: 22px;
+    }
+
+    .welcome-leaf {
+        width: 55px;
+        height: 55px;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .dashboard-stat {
+        padding: 16px;
+    }
+
+    .dashboard-stat>strong {
+        font-size: 26px;
+    }
+
+    .dashboard-stat>strong.rank-name {
+        font-size: 15px;
+    }
+
+    .dashboard-panel {
+        padding: 20px;
+    }
+
+    .dashboard-quick-links {
+        padding: 20px;
+    }
+
+    .quick-link-buttons {
+        width: 100%;
+    }
+}
