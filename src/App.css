@@ -927,3 +927,15 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+.developer-credit {
+  text-align: center;
+  margin-top: 20px;
+  color: #a5c4a5;
+  font-size: 14px;
+}
+
+.developer-credit strong {
+  color: #b6ff4a;
+  font-weight: 700;
+}

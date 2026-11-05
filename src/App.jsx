@@ -272,6 +272,9 @@ function App() {
         </a>
         <p>Designed for a greener world. Built for tomorrow.</p>
         <span className="footer-copy">© 2026 GREENVERSE</span>
+        <p className="developer-credit">
+          Designed & Developed by <strong>Febin U</strong>
+        </p>
       </footer>
     </div>
   );
