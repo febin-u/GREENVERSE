@@ -168,19 +168,22 @@ function GreenChallenges() {
     useEffect(() => {
         if (!ready) return;
 
-        try {
-            localStorage.setItem(
-                "greenverse-challenges-v1",
-                JSON.stringify(completed)
-            );
-        } catch {
-            // Browser storage may be unavailable.
+        // Save locally only for users who are not logged in.
+        if (!userId) {
+            try {
+                localStorage.setItem(
+                    "greenverse-challenges-v1",
+                    JSON.stringify(completed)
+                );
+            } catch {
+                // Browser storage may be unavailable.
+            }
         }
 
         window.dispatchEvent(
             new Event("greenverse-challenges-updated")
         );
-    }, [completed, ready]);
+    }, [completed, ready, userId]);
 
     const completedCount = initialChallenges.filter((challenge) =>
         completed.includes(challenge.id)

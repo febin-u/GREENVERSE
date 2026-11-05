@@ -51,7 +51,6 @@ function getLocalChallenges() {
 
 function Dashboard() {
     const [completed, setCompleted] = useState(getLocalChallenges);
-    const [session, setSession] = useState(null);
     const [userId, setUserId] = useState(null);
     const [userEmail, setUserEmail] = useState("");
     const [loading, setLoading] = useState(true);
@@ -78,7 +77,6 @@ function Dashboard() {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((_event, session) => {
             if (!active) return;
-            setSession(session);
             setUserId(session?.user?.id || null);
             setUserEmail(session?.user?.email || "");
         });
@@ -124,14 +122,7 @@ function Dashboard() {
 
             setCompleted(savedIds);
 
-            try {
-                localStorage.setItem(
-                    "greenverse-challenges-v1",
-                    JSON.stringify(savedIds)
-                );
-            } catch {
-                // Browser storage may be unavailable.
-            }
+
 
             setLoading(false);
         }
