@@ -134,3 +134,23 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+# Local and editor files
+.DS_Store
+.vscode/
+
+# Android signing key
+*.jks
+*.keystore
+
+# Build output
+dist/
+# Android Studio and generated release files
+.idea/
+android/.idea/
+android/app/build/
+android/build/
+android/app/release/
+
+# iOS generated files
+ios/Pods/
+ios/build/

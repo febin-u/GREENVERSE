@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+
 import {
     Leaf,
     Trophy,
@@ -15,6 +16,7 @@ import {
     Sparkles,
     CheckCircle2,
 } from "lucide-react";
+
 import { supabase } from "./lib/supabaseClient";
 import "./Dashboard.css";
 
@@ -77,6 +79,7 @@ function Dashboard() {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((_event, session) => {
             if (!active) return;
+
             setUserId(session?.user?.id || null);
             setUserEmail(session?.user?.email || "");
         });
@@ -121,9 +124,6 @@ function Dashboard() {
                 .map((item) => Number(item.challenge_id));
 
             setCompleted(savedIds);
-
-
-
             setLoading(false);
         }
 
@@ -172,10 +172,12 @@ function Dashboard() {
 
         return () => {
             active = false;
+
             window.removeEventListener(
                 "greenverse-challenges-updated",
                 refreshProgress
             );
+
             window.removeEventListener("storage", refreshProgress);
         };
     }, [userId]);
@@ -204,26 +206,42 @@ function Dashboard() {
 
     return (
         <section className="dashboard-section" id="dashboard">
+
+            {/* Dashboard heading */}
             <div className="dashboard-heading">
-                <span className="section-tag">YOUR SUSTAINABILITY JOURNEY</span>
-                <h2>Your impact.<br /><span>Your planet.</span></h2>
+                <span className="section-tag">
+                    YOUR SUSTAINABILITY JOURNEY
+                </span>
+
+                <h2>
+                    Your impact.
+                    <br />
+                    <span>Your planet.</span>
+                </h2>
+
                 <p>
                     Every green action counts. Track your progress and
                     keep moving towards a sustainable future.
                 </p>
             </div>
 
+            {/* Welcome banner */}
             <div className="dashboard-welcome">
-                <div>
+                <div className="dashboard-welcome-content">
                     <span className="welcome-label">
-                        <Sparkles size={14} /> YOUR GREENVERSE OVERVIEW
+                        <Sparkles size={14} />
+                        YOUR GREENVERSE OVERVIEW
                     </span>
+
                     <h3>
                         {userEmail
                             ? `Welcome, ${userEmail.split("@")[0]}!`
                             : "Welcome, Eco Explorer!"}
                     </h3>
-                    <p>Your journey towards a greener tomorrow starts here.</p>
+
+                    <p>
+                        Track your progress. Make every action count.
+                    </p>
                 </div>
 
                 <div className="welcome-leaf">
@@ -231,15 +249,20 @@ function Dashboard() {
                 </div>
             </div>
 
+            {/* Error and loading messages */}
             {errorMessage && (
                 <p role="alert" style={{ color: "#ff8585" }}>
                     Could not load your cloud progress: {errorMessage}
                 </p>
             )}
 
-            {loading && <p>Loading your saved eco progress...</p>}
+            {loading && (
+                <p>Loading your saved eco progress...</p>
+            )}
 
+            {/* Dashboard statistics */}
             <div className="dashboard-stats">
+
                 <div className="dashboard-stat">
                     <div className="stat-icon points">
                         <Trophy size={23} />
@@ -254,7 +277,9 @@ function Dashboard() {
                         <CheckCircle2 size={23} />
                     </div>
                     <span>COMPLETED MISSIONS</span>
-                    <strong>{completedChallenges.length}/{challenges.length}</strong>
+                    <strong>
+                        {completedChallenges.length}/{challenges.length}
+                    </strong>
                     <small>Environmental challenges</small>
                 </div>
 
@@ -275,9 +300,13 @@ function Dashboard() {
                     <strong className="rank-name">{currentRank}</strong>
                     <small>Keep making a difference</small>
                 </div>
+
             </div>
 
+            {/* Main dashboard panels */}
             <div className="dashboard-main-grid">
+
+                {/* Challenge progress */}
                 <div className="dashboard-panel">
                     <div className="panel-heading">
                         <div>
@@ -296,7 +325,9 @@ function Dashboard() {
 
                     <div className="progress-details">
                         <span>{completedChallenges.length} completed</span>
-                        <span>{challenges.length - completedChallenges.length} remaining</span>
+                        <span>
+                            {challenges.length - completedChallenges.length} remaining
+                        </span>
                     </div>
 
                     <div className="dashboard-completed-list">
@@ -334,6 +365,7 @@ function Dashboard() {
                     </div>
                 </div>
 
+                {/* Achievements */}
                 <div className="dashboard-panel achievement-panel">
                     <div className="panel-heading">
                         <div>
@@ -345,6 +377,7 @@ function Dashboard() {
 
                     {achievements.map((achievement) => {
                         const Icon = achievement.icon;
+
                         const unlocked =
                             completedChallenges.length >= achievement.threshold;
 
@@ -376,8 +409,10 @@ function Dashboard() {
                         );
                     })}
                 </div>
+
             </div>
 
+            {/* Quick links */}
             <div className="dashboard-quick-links">
                 <div>
                     <span className="section-tag">KEEP EXPLORING</span>
@@ -388,14 +423,17 @@ function Dashboard() {
                     <a href="#challenges">
                         Challenges <ArrowUpRight size={16} />
                     </a>
+
                     <a href="#waste-guide">
                         Waste Guide <ArrowUpRight size={16} />
                     </a>
+
                     <a href="#assistant">
                         Eco Assistant <ArrowUpRight size={16} />
                     </a>
                 </div>
             </div>
+
         </section>
     );
 }

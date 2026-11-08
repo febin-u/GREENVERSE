@@ -1,280 +1,271 @@
+
+import { useEffect, useState } from "react";
+import { supabase } from "./lib/supabaseClient";
+
 import Auth from "./Auth";
 import Dashboard from "./Dashboard";
 import GreenChallenges from "./GreenChallenges";
 import WasteGuide from "./WasteGuide";
 import EcoAssistant from "./EcoAssistant";
 import CarbonCalculator from "./CarbonCalculator";
-import { useState } from "react";
+
 import {
   Leaf,
-  ArrowUpRight,
-  Menu,
-  X,
-  Sprout,
-  Recycle,
-  Droplets,
-  Wind,
-  Sun,
-  TreePine,
-  Globe2,
-  Activity,
   Footprints,
+  Recycle,
+  Sprout,
+  Bot,
+  ChartNoAxesCombined,
+  LogOut,
+  ArrowLeft,
 } from "lucide-react";
+
 import "./App.css";
 
+const features = [
+  {
+    id: "carbon",
+    title: "Carbon Calculator",
+    description: "Understand and reduce your carbon footprint.",
+    icon: Footprints,
+  },
+  {
+    id: "waste",
+    title: "Waste Guide",
+    description: "Learn how to sort and dispose of waste.",
+    icon: Recycle,
+  },
+  {
+    id: "challenges",
+    title: "Green Challenges",
+    description: "Complete eco-friendly daily missions.",
+    icon: Sprout,
+  },
+  {
+    id: "assistant",
+    title: "Eco Assistant",
+    description: "Get answers to your sustainability questions.",
+    icon: Bot,
+  },
+  {
+    id: "impact",
+    title: "My Impact",
+    description: "Track your environmental progress and points.",
+    icon: ChartNoAxesCombined,
+  },
+];
+
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [session, setSession] = useState(null);
+  const [checkingSession, setCheckingSession] = useState(true);
+  const [currentPage, setCurrentPage] = useState("dashboard");
 
-  const features = [
-    {
-      icon: Footprints,
-      title: "Carbon Footprint",
-      description: "Understand your environmental impact and discover ways to reduce it.",
-      color: "green",
-      number: "01",
-    },
-    {
-      icon: Recycle,
-      title: "Smart Recycling",
-      description: "Learn how to sort waste and give everyday materials a second life.",
-      color: "blue",
-      number: "02",
-    },
-    {
-      icon: Sprout,
-      title: "Green Challenges",
-      description: "Take small daily actions that create a lasting environmental impact.",
-      color: "lime",
-      number: "03",
-    },
-  ];
+  useEffect(() => {
+    let mounted = true;
 
-  const stats = [
-    { value: "1.2M+", label: "Trees protected", icon: TreePine },
-    { value: "850K+", label: "Eco actions taken", icon: Activity },
-    { value: "42K+", label: "Green citizens", icon: Globe2 },
-  ];
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (error) console.error(error);
 
+      if (mounted) {
+        setSession(data.session);
+        setCheckingSession(false);
+      }
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+      setCurrentPage("dashboard");
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  async function handleLogout() {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      alert(error.message);
+    } else {
+      setCurrentPage("dashboard");
+    }
+  }
+
+  if (checkingSession) {
+    return (
+      <div className="app-loading">
+        <Leaf size={35} />
+        <h2>GREENVERSE</h2>
+        <p>Preparing your green journey...</p>
+      </div>
+    );
+  }
+
+  // LOGIN SCREEN
+  if (!session) {
+    return (
+      <div className="app auth-screen">
+        <header className="mobile-app-header">
+          <div className="brand">
+            <Leaf size={25} />
+            <span>
+              green<span className="brand-light">verse</span>
+            </span>
+          </div>
+        </header>
+
+        <Auth />
+      </div>
+    );
+  }
+
+  // FEATURE PAGE RENDERING
+  function renderPage() {
+    switch (currentPage) {
+      case "carbon":
+        return <CarbonCalculator />;
+
+      case "waste":
+        return <WasteGuide />;
+
+      case "challenges":
+        return <GreenChallenges />;
+
+      case "assistant":
+        return <EcoAssistant />;
+
+      case "impact":
+        return <Dashboard />;
+
+      default:
+        return (
+          <section className="app-dashboard">
+            <div className="app-home-welcome">
+              <span className="section-tag">
+                YOUR GREEN JOURNEY
+              </span>
+
+              <h1>
+                Welcome to <span>GREENVERSE.</span>
+              </h1>
+
+              <p>
+                Choose a tool and take your next step towards a greener
+                planet.
+              </p>
+            </div>
+
+            <div className="app-feature-grid">
+              {features.map((feature) => {
+                const Icon = feature.icon;
+
+                return (
+                  <button
+                    className="app-feature-card"
+                    key={feature.id}
+                    onClick={() => setCurrentPage(feature.id)}
+                  >
+                    <span className="app-feature-icon">
+                      <Icon size={27} />
+                    </span>
+
+                    <strong>{feature.title}</strong>
+
+                    <span>{feature.description}</span>
+
+                    <span className="app-card-arrow">
+                      Explore →
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        );
+    }
+  }
+
+  const activeFeature = features.find(
+    (feature) => feature.id === currentPage
+  );
+
+  // AUTHENTICATED APP
   return (
-    <div className="app">
-      <nav className="navbar">
-        <a href="#home" className="brand">
-          <span className="brand-icon"><Leaf size={23} /></span>
-          <span>green<span className="brand-light">verse</span></span>
-        </a>
+    <div className="app mobile-app">
+      <header className="mobile-app-header">
+        <button
+          className="app-back-button"
+          onClick={() => setCurrentPage("dashboard")}
+          aria-label="Back to dashboard"
+          hidden={currentPage === "dashboard"}
+        >
+          <ArrowLeft size={22} />
+        </button>
 
-        <div className={`nav-links ${menuOpen ? "show-menu" : ""}`}>
-          <a href="#home" onClick={() => setMenuOpen(false)}>Home</a>
-          <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
-          <a href="#features" onClick={() => setMenuOpen(false)}>Explore</a>
-          <a href="#impact" onClick={() => setMenuOpen(false)}>Our Impact</a>
-          <a href="#auth" className="mobile-contact" onClick={() => setMenuOpen(false)}>Get Started ↗</a>
+        <div className="brand">
+          <Leaf size={25} />
+          <span>
+            green<span className="brand-light">verse</span>
+          </span>
         </div>
 
-        <a href="#auth" className="nav-cta">
-          Get Started <ArrowUpRight size={16} />
-        </a>
+        <button
+          className="app-logout-button"
+          onClick={handleLogout}
+          aria-label="Log out"
+        >
+          <LogOut size={20} />
+        </button>
+      </header>
+
+      {activeFeature && (
+        <div className="app-page-heading">
+          <button onClick={() => setCurrentPage("dashboard")}>
+            <ArrowLeft size={17} /> Dashboard
+          </button>
+
+          <h2>{activeFeature.title}</h2>
+        </div>
+      )}
+
+      <main className="mobile-app-content">
+        {renderPage()}
+      </main>
+
+      {/* BOTTOM NAVIGATION */}
+      <nav className="app-bottom-nav">
+        <button
+          className={currentPage === "dashboard" ? "active" : ""}
+          onClick={() => setCurrentPage("dashboard")}
+        >
+          <Leaf size={20} />
+          <span>Home</span>
+        </button>
 
         <button
-          className="menu-toggle"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
+          className={currentPage === "challenges" ? "active" : ""}
+          onClick={() => setCurrentPage("challenges")}
         >
-          {menuOpen ? <X /> : <Menu />}
+          <Sprout size={20} />
+          <span>Challenges</span>
+        </button>
+
+        <button
+          className={currentPage === "impact" ? "active" : ""}
+          onClick={() => setCurrentPage("impact")}
+        >
+          <ChartNoAxesCombined size={20} />
+          <span>My Impact</span>
         </button>
       </nav>
 
-      <main>
-        <section className="hero" id="home">
-          <div className="hero-grid"></div>
-          <div className="hero-content">
-            <div className="eyebrow">
-              <span className="live-dot"></span>
-              THE FUTURE IS GREEN
-            </div>
-
-            <h1>
-              Small actions.<br />
-              <span>Big impact.</span><br />
-              One planet.
-            </h1>
-
-            <p className="hero-description">
-              The future of our planet starts with the choices we make today.
-              Discover smarter ways to live sustainably and make every action count.
-            </p>
-
-            <div className="hero-buttons">
-              <a href="#features" className="primary-btn">
-                Explore the platform <ArrowUpRight size={18} />
-              </a>
-              <a href="#about" className="secondary-btn">
-                Discover our mission
-              </a>
-            </div>
-
-            <div className="hero-note">
-              <span><Leaf size={15} /></span>
-              BUILD A BETTER TOMORROW, STARTING TODAY.
-            </div>
-          </div>
-
-          <div className="hero-art">
-            <div className="orbit orbit-one"></div>
-            <div className="orbit orbit-two"></div>
-            <div className="planet">
-              <div className="planet-glow"></div>
-              <div className="planet-land land-one"></div>
-              <div className="planet-land land-two"></div>
-              <div className="planet-land land-three"></div>
-              <div className="planet-shine"></div>
-            </div>
-
-            <div className="floating-card card-top">
-              <span className="floating-icon"><Sprout size={20} /></span>
-              <div>
-                <strong>Grow greener</strong>
-                <small>Every action matters</small>
-              </div>
-            </div>
-
-            <div className="floating-card card-bottom">
-              <span className="floating-icon"><Wind size={20} /></span>
-              <div>
-                <strong>Cleaner future</strong>
-                <small>One planet. One mission.</small>
-              </div>
-            </div>
-
-            <div className="orbit-label">OUR PLANET · OUR FUTURE</div>
-          </div>
-
-          <div className="hero-bottom">
-            <span>01 / 04</span>
-            <span className="hero-line"></span>
-            <span>DESIGNED FOR A GREENER WORLD</span>
-          </div>
-        </section>
-
-        <section className="stats-section" id="impact">
-          <div className="stats-intro">
-            <span className="section-tag">OUR VISION IN ACTION</span>
-            <h2>A better world<br />starts <span>together.</span></h2>
-          </div>
-
-          <div className="stats-grid">
-            {stats.map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <div className="stat-item" key={stat.label}>
-                  <Icon size={23} />
-                  <h3>{stat.value}</h3>
-                  <p>{stat.label}</p>
-                </div>
-              );
-            })}
-          </div>
-          <p className="stats-disclaimer">
-            Illustrative platform targets — not verified live environmental measurements.
-          </p>
-        </section>
-
-        <section className="about-section" id="about">
-          <div className="about-visual">
-            <div className="about-circle">
-              <Leaf size={75} strokeWidth={1} />
-              <span>THINK GREEN</span>
-            </div>
-            <div className="about-small-card">
-              <Sun size={19} />
-              <span>POWER A CLEANER FUTURE</span>
-            </div>
-          </div>
-
-          <div className="about-content">
-            <span className="section-tag">WHY GREENVERSE?</span>
-            <h2>Technology with a <span>purpose.</span></h2>
-            <p>
-              Sustainability shouldn't be complicated. GREENVERSE brings
-              environmental awareness, useful tools and meaningful actions
-              together in one digital ecosystem.
-            </p>
-            <p>
-              From understanding your carbon footprint to building greener
-              habits, we're here to turn awareness into action.
-            </p>
-            <a href="#features" className="text-link">
-              Discover what you can do <ArrowUpRight size={18} />
-            </a>
-          </div>
-        </section>
-
-        <section className="features-section" id="features">
-          <div className="section-heading">
-            <div>
-              <span className="section-tag">EXPLORE GREENVERSE</span>
-              <h2>Make sustainability<br /><span>your lifestyle.</span></h2>
-            </div>
-            <p>
-              Powerful ideas and practical tools to help you make
-              a difference, one step at a time.
-            </p>
-          </div>
-
-          <div className="feature-grid">
-            {features.map((feature) => {
-              const Icon = feature.icon;
-              return (
-                <article className="feature-card" key={feature.number}>
-                  <div className="feature-top">
-                    <span className={`feature-icon ${feature.color}`}>
-                      <Icon size={26} />
-                    </span>
-                    <span className="feature-number">{feature.number}</span>
-                  </div>
-                  <h3>{feature.title}</h3>
-                  <p>{feature.description}</p>
-                  <a href="#contact" className="feature-link">
-                    Explore feature <ArrowUpRight size={17} />
-                  </a>
-                </article>
-              );
-            })}
-          </div>
-        </section>
-        <CarbonCalculator />
-
-        <EcoAssistant />
-
-        <WasteGuide />
-
-        <GreenChallenges />
-
-        <Dashboard />
-
-        <Auth />
-
-        <section className="cta-section" id="contact">
-          <div className="cta-glow"></div>
-          <span className="section-tag">THE CHANGE STARTS WITH YOU</span>
-          <h2>Let's build a <span>greener tomorrow.</span></h2>
-          <p>Be part of a generation that chooses the planet.</p>
-          <a href="#home" className="primary-btn">
-            Start your green journey <ArrowUpRight size={18} />
-          </a>
-        </section>
-      </main>
-
-      <footer className="footer">
-        <a href="#home" className="brand">
-          <span className="brand-icon"><Leaf size={21} /></span>
-          <span>green<span className="brand-light">verse</span></span>
-        </a>
-        <p>Designed for a greener world. Built for tomorrow.</p>
-        <span className="footer-copy">© 2026 GREENVERSE</span>
-        <p className="developer-credit">
-          Designed & Developed by <strong>Febin U</strong>
-        </p>
+      {/* DEVELOPER CREDIT - SEPARATE FROM NAVIGATION */}
+      <footer className="app-developer-credit">
+        Designed &amp; Developed by <strong>Febin U</strong>
       </footer>
     </div>
   );

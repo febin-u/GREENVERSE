@@ -939,3 +939,320 @@ button {
   color: #b6ff4a;
   font-weight: 700;
 }
+
+/* =================================
+   GREENVERSE MOBILE APP DESIGN
+================================= */
+
+.mobile-app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #071b12;
+  color: #f2f8f1;
+  padding-bottom: 85px;
+}
+
+.mobile-app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: rgba(7, 27, 18, 0.96);
+  border-bottom: 1px solid rgba(182, 255, 74, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.mobile-app-header .brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #b6ff4a;
+  font-size: 23px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.mobile-app-header .brand-light {
+  color: #ffffff;
+}
+
+.app-back-button,
+.app-logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(182, 255, 74, 0.2);
+  border-radius: 12px;
+  background: #102b1d;
+  color: #b6ff4a;
+  cursor: pointer;
+}
+
+.app-back-button[hidden] {
+  visibility: hidden;
+  display: flex;
+}
+
+.mobile-app-content {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 24px 18px;
+}
+
+.dashboard-welcome {
+  padding: 24px 5px 28px;
+}
+
+.dashboard-welcome h1 {
+  margin: 12px 0;
+  font-size: clamp(29px, 7vw, 42px);
+  line-height: 1.2;
+}
+
+.dashboard-welcome h1 span {
+  color: #b6ff4a;
+}
+
+.dashboard-welcome p {
+  color: #a9bdb0;
+  line-height: 1.6;
+}
+
+.app-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.app-feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 185px;
+  padding: 18px;
+  border: 1px solid rgba(182, 255, 74, 0.14);
+  border-radius: 19px;
+  background: linear-gradient(145deg, #153c28, #0d291b);
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.app-feature-card:active {
+  transform: scale(0.97);
+}
+
+.app-feature-card:hover {
+  border-color: #b6ff4a;
+}
+
+.app-feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 49px;
+  height: 49px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  background: rgba(182, 255, 74, 0.12);
+  color: #b6ff4a;
+}
+
+.app-feature-card strong {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.app-feature-card>span:not(.app-feature-icon) {
+  color: #b4c7b8;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.app-feature-card .app-card-arrow {
+  margin-top: auto;
+  padding-top: 15px;
+  color: #b6ff4a !important;
+  font-weight: 700;
+}
+
+.app-page-heading {
+  padding: 18px 20px 0;
+}
+
+.app-page-heading button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  background: none;
+  color: #b6ff4a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.app-page-heading h2 {
+  margin-top: 18px;
+  color: #ffffff;
+}
+
+.app-bottom-nav {
+  position: fixed;
+  z-index: 200;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 11px 8px calc(11px + env(safe-area-inset-bottom));
+  background: #0c2619;
+  border-top: 1px solid rgba(182, 255, 74, 0.15);
+}
+
+.app-bottom-nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: none;
+  color: #8ba394;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.app-bottom-nav button.active {
+  color: #b6ff4a;
+}
+
+.app-loading {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #071b12;
+  color: #b6ff4a;
+  text-align: center;
+}
+
+.app-loading p {
+  color: #a9bdb0;
+}
+
+.auth-screen {
+  min-height: 100vh;
+  background: #071b12;
+}
+
+.auth-screen .auth-section {
+  min-height: calc(100vh - 75px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+@media (max-width: 420px) {
+  .mobile-app-content {
+    padding: 18px 13px;
+  }
+
+  .app-feature-grid {
+    gap: 10px;
+  }
+
+  .app-feature-card {
+    min-height: 175px;
+    padding: 14px;
+  }
+
+  .app-feature-card strong {
+    font-size: 14px;
+  }
+}
+
+.app-developer-credit {
+  padding: 18px 10px;
+  margin-bottom: 15px;
+  color: #a5c4a5;
+  text-align: center;
+  font-size: 12px;
+}
+
+.app-developer-credit strong {
+  color: #b6ff4a;
+  font-weight: 700;
+}
+
+.app-home-welcome {
+  display: block;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 28px;
+  padding: 24px 20px;
+  border: 1px solid rgba(182, 255, 74, 0.2);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #0b2b19, #071b11);
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.app-home-welcome .section-tag {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.app-home-welcome h1 {
+  margin: 0 0 12px;
+  font-size: clamp(28px, 7vw, 38px);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.app-home-welcome h1 span {
+  color: #b6ff4a;
+}
+
+.app-home-welcome p {
+  margin: 0;
+  max-width: 38ch;
+  color: #a9bdb0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.app-bottom-nav {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.app-bottom-nav button {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-developer-credit {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px 10px;
+  margin: 0;
+  text-align: center;
+  font-size: 10px;
+  color: #91aa98;
+  background: #071b11;
+}
+
+.app-developer-credit strong {
+  color: #b6ff4a;
+}

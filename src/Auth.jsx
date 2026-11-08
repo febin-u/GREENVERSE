@@ -1,31 +1,31 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { supabase } from "./lib/supabaseClient";
 import "./Auth.css";
 
 function Auth() {
     const [isLogin, setIsLogin] = useState(true);
-    const [session, setSession] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        supabase.auth.getSession().then(({ data }) => {
-            setSession(data.session);
-        });
+    // Record successful logins in Supabase
+    async function recordLogin(userId, loginType) {
+        const { error } = await supabase
+            .from("login_events")
+            .insert({
+                user_id: userId,
+                login_type: loginType,
+            });
 
-        const {
-            data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session);
-        });
+        if (error) {
+            console.error("Login tracking error:", error.message);
+        }
+    }
 
-        return () => subscription.unsubscribe();
-    }, []);
-
+    // Email login and signup
     async function handleSubmit(event) {
         event.preventDefault();
         setError("");
@@ -34,14 +34,15 @@ function Auth() {
 
         try {
             if (isLogin) {
-                const { error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password,
-                });
+                const { data, error } =
+                    await supabase.auth.signInWithPassword({
+                        email,
+                        password,
+                    });
 
                 if (error) throw error;
 
-                setMessage("Welcome back to GREENVERSE!");
+                await recordLogin(data.user.id, "email");
             } else {
                 const { data, error } = await supabase.auth.signUp({
                     email,
@@ -50,10 +51,12 @@ function Auth() {
 
                 if (error) throw error;
 
-                if (data.session) {
-                    setMessage("Your account has been created successfully!");
+                if (data.session && data.user) {
+                    await recordLogin(data.user.id, "email");
                 } else {
-                    setMessage("Account created! Please check your email to confirm your account.");
+                    setMessage(
+                        "Account created! Please check your email to confirm your account."
+                    );
                 }
             }
         } catch (err) {
@@ -63,14 +66,25 @@ function Auth() {
         }
     }
 
-    async function handleLogout() {
+    // Guest login
+    async function handleGuestLogin() {
         setError("");
-        const { error } = await supabase.auth.signOut();
+        setMessage("");
+        setLoading(true);
 
-        if (error) {
-            setError(error.message);
-        } else {
-            setMessage("You have logged out successfully.");
+        try {
+            const { data, error } =
+                await supabase.auth.signInAnonymously();
+
+            if (error) throw error;
+
+            if (data.user) {
+                await recordLogin(data.user.id, "guest");
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -79,87 +93,99 @@ function Auth() {
             <div className="auth-card">
                 <span className="auth-tag">YOUR GREENER JOURNEY</span>
 
-                {session ? (
-                    <div className="auth-logged-in">
-                        <h2>Welcome to GREENVERSE!</h2>
-                        <p>You are signed in as:</p>
-                        <strong>{session.user.email}</strong>
-                        <button onClick={handleLogout} className="auth-button">
-                            Log Out
-                        </button>
-                    </div>
-                ) : (
-                    <>
-                        <h2>{isLogin ? "Welcome Back" : "Create Your Account"}</h2>
-                        <p className="auth-description">
-                            {isLogin
-                                ? "Sign in and continue your journey towards a greener planet."
-                                : "Join GREENVERSE and start making a positive impact."}
-                        </p>
+                <h2>{isLogin ? "Welcome Back" : "Create Your Account"}</h2>
 
-                        <div className="auth-tabs">
-                            <button
-                                className={isLogin ? "active" : ""}
-                                onClick={() => {
-                                    setIsLogin(true);
-                                    setError("");
-                                    setMessage("");
-                                }}
-                            >
-                                Login
-                            </button>
+                <p className="auth-description">
+                    {isLogin
+                        ? "Sign in and continue your journey towards a greener planet."
+                        : "Join GREENVERSE and start making a positive impact."}
+                </p>
 
-                            <button
-                                className={!isLogin ? "active" : ""}
-                                onClick={() => {
-                                    setIsLogin(false);
-                                    setError("");
-                                    setMessage("");
-                                }}
-                            >
-                                Sign Up
-                            </button>
-                        </div>
+                <div className="auth-tabs">
+                    <button
+                        type="button"
+                        className={isLogin ? "active" : ""}
+                        onClick={() => {
+                            setIsLogin(true);
+                            setError("");
+                            setMessage("");
+                        }}
+                    >
+                        Login
+                    </button>
 
-                        <form onSubmit={handleSubmit}>
-                            <label htmlFor="auth-email">Email Address</label>
-                            <input
-                                id="auth-email"
-                                type="email"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChange={(event) => setEmail(event.target.value)}
-                                required
-                            />
+                    <button
+                        type="button"
+                        className={!isLogin ? "active" : ""}
+                        onClick={() => {
+                            setIsLogin(false);
+                            setError("");
+                            setMessage("");
+                        }}
+                    >
+                        Sign Up
+                    </button>
+                </div>
 
-                            <label htmlFor="auth-password">Password</label>
-                            <input
-                                id="auth-password"
-                                type="password"
-                                placeholder="At least 6 characters"
-                                value={password}
-                                onChange={(event) => setPassword(event.target.value)}
-                                minLength={6}
-                                required
-                            />
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="auth-email">Email Address</label>
+                    <input
+                        id="auth-email"
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        required
+                    />
 
-                            <button
-                                type="submit"
-                                className="auth-button"
-                                disabled={loading}
-                            >
-                                {loading
-                                    ? "Please wait..."
-                                    : isLogin
-                                        ? "Login to GREENVERSE"
-                                        : "Create Account"}
-                            </button>
-                        </form>
-                    </>
-                )}
+                    <label htmlFor="auth-password">Password</label>
+                    <input
+                        id="auth-password"
+                        type="password"
+                        placeholder="At least 6 characters"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        minLength={6}
+                        required
+                    />
+
+                    <button
+                        type="submit"
+                        className="auth-button"
+                        disabled={loading}
+                    >
+                        {loading
+                            ? "Please wait..."
+                            : isLogin
+                                ? "Login to GREENVERSE"
+                                : "Create Account"}
+                    </button>
+                </form>
 
                 {error && <p className="auth-error">{error}</p>}
                 {message && <p className="auth-message">{message}</p>}
+
+                <div className="auth-guest-divider">
+                    <span>OR</span>
+                </div>
+
+                <div className="auth-guest-note">
+                    <strong>Want to explore first?</strong>
+                    <p>
+                        You can continue as a guest, but signing up gives you
+                        a better experience. Create an account to keep your
+                        progress and access your GREENVERSE journey again.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    className="auth-guest-button"
+                    onClick={handleGuestLogin}
+                    disabled={loading}
+                >
+                    {loading ? "Please wait..." : "Continue as Guest"}
+                </button>
             </div>
         </section>
     );
