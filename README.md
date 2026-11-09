@@ -198,4 +198,4 @@ Participant: Febin U
 
 ### Carbon Calculator
 
-![GREENVERSE Carbon Calculator](carbon-calculator.png)
+
