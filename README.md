@@ -82,7 +82,7 @@ Application flow:
 5. Live Application
 
 Live Website:
-https://greenverse-xl.vercel.app
+https://greenverse-xi.vercel.app/
 
 GitHub Repository:
 https://github.com/febin-u/GREENVERSE
