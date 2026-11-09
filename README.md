@@ -188,3 +188,10 @@ Organised by: FOSS Club, Department of Computer Science and Engineering, MEA Eng
 Registration ID: TC-2026-AJZKUD
 Project: GREENVERSE
 Participant: Febin U
+---
+
+## Project Screenshots
+
+### GREENVERSE Dashboard
+
+![GREENVERSE Dashboard](dashboard.png)
