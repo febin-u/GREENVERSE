@@ -154,7 +154,7 @@ The web application is deployed using Vercel.
 
 The project is connected to GitHub for source code management and deployment updates.
 
-Deployment URL: https://greenverse-xl.vercel.app
+Deployment URL: https://greenverse-8s2pabc55-virus-52f6.vercel.app
 
 ---
 
