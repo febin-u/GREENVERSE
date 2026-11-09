@@ -190,12 +190,42 @@ Project: GREENVERSE
 Participant: Febin U
 ---
 
+---
+
 ## Project Screenshots
 
-### GREENVERSE Dashboard
+### 1. GREENVERSE Dashboard
 
 ![GREENVERSE Dashboard](dashboard.png)
 
-### Carbon Calculator
+---
 
+### 2. Carbon Calculator
 
+![Carbon Calculator](carbon-calculator.png)
+
+---
+
+### 3. Waste Guide
+
+![Waste Guide](waste-guide.png)
+
+---
+
+### 4. Green Challenges
+
+![Green Challenges](green-challenge.png)
+
+---
+
+### 5. Eco Assistant
+
+![Eco Assistant](eco-assistant.png)
+
+---
+
+### 6. My Impact
+
+![My Impact](my-impact.png)
+
+---
